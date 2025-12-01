@@ -2,10 +2,8 @@ import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { Alert } from 'react-native';
 
-/**
- * Сервис для работы с файлами
- * Включает отправку и скачивание файлов
- */
+// Service for file operations
+// Can upload and download files
 
 export interface FileUploadResult {
   success: boolean;
@@ -13,9 +11,7 @@ export interface FileUploadResult {
   error?: string;
 }
 
-/**
- * Выбор файла с устройства
- */
+// Pick file from device
 export const pickFile = async (): Promise<FileUploadResult> => {
   try {
     const result = await DocumentPicker.getDocumentAsync({
@@ -41,17 +37,16 @@ export const pickFile = async (): Promise<FileUploadResult> => {
   }
 };
 
-/**
- * Загрузка файла на сервер
- * В данном примере используется mock-сервер, в реальном приложении замените на ваш API
- */
+// Upload file to server
+// Using mock server here, in real app replace with your API
 export const uploadFile = async (
   fileUri: string,
   onProgress?: (progress: number) => void
 ): Promise<FileUploadResult> => {
   try {
-    // В реальном приложении здесь должен быть ваш API endpoint
-    const uploadUrl = 'https://httpbin.org/post'; // Mock endpoint для тестирования
+    // In real app this should be your API endpoint
+    const uploadUrl = 'https://httpbin.org/post'; // Mock endpoint for testing
+    // TODO: replace with real API when backend is ready
 
     const fileInfo = await FileSystem.getInfoAsync(fileUri);
     if (!fileInfo.exists) {
@@ -84,9 +79,7 @@ export const uploadFile = async (
   }
 };
 
-/**
- * Скачивание файла с сервера
- */
+// Download file from server
 export const downloadFile = async (
   url: string,
   fileName: string,

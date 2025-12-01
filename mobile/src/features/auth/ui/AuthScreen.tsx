@@ -13,10 +13,8 @@ import { setAuthenticated, setBiometricEnabled, setLoading } from '../model/auth
 import { authenticateWithBiometrics, checkBiometrics } from '../lib/biometrics';
 import { loadAuthState, saveAuthState } from '@/shared/lib/storage';
 
-/**
- * Экран аутентификации с биометрией
- * Показывается при первом запуске и после logout
- */
+// Auth screen with biometric login
+// Shows on first start and after logout
 export const AuthScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector((state: RootState) => state.auth.isLoading);
@@ -29,9 +27,7 @@ export const AuthScreen: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /**
-   * Проверка доступности биометрии
-   */
+  // Check if device has biometric
   const checkBiometricAvailability = async () => {
     const { available, biometryType: type } = await checkBiometrics();
     setBiometricAvailable(available);
@@ -39,20 +35,16 @@ export const AuthScreen: React.FC = () => {
     dispatch(setBiometricEnabled(available));
   };
 
-  /**
-   * Проверка сохраненного состояния аутентификации
-   */
+  // Check saved auth state
   const checkSavedAuth = async () => {
     const isAuthenticated = await loadAuthState();
     if (isAuthenticated) {
-      // Если была сохранена аутентификация, запрашиваем биометрию
+      // If user was logged in before, ask for biometric
       handleBiometricAuth();
     }
   };
 
-  /**
-   * Обработка биометрической аутентификации
-   */
+  // Handle biometric login
   const handleBiometricAuth = async () => {
     dispatch(setLoading(true));
     
@@ -72,9 +64,7 @@ export const AuthScreen: React.FC = () => {
     dispatch(setLoading(false));
   };
 
-  /**
-   * Пропуск аутентификации (для тестирования)
-   */
+  // Skip auth for testing
   const handleSkipAuth = async () => {
     dispatch(setAuthenticated(true));
     await saveAuthState(true);

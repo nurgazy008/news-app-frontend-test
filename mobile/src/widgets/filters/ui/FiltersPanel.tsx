@@ -51,10 +51,8 @@ const SORT_OPTIONS = [
   { value: 'relevancy', label: 'По релевантности' },
 ];
 
-/**
- * Панель фильтров для новостей
- * Позволяет фильтровать по категориям, странам и сортировать
- */
+// Filters panel for news
+// Can filter by category, country and sort
 export const FiltersPanel: React.FC<FiltersPanelProps> = ({
   filters,
   onFiltersChange,

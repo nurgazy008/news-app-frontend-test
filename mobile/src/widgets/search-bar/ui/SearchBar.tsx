@@ -12,9 +12,7 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-/**
- * Компонент поисковой строки
- */
+// Search bar component
 export const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   placeholder = 'Поиск новостей...',

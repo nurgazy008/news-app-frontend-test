@@ -9,10 +9,8 @@ const initialState: FavoritesState = {
   favorites: [],
 };
 
-/**
- * Слайс для управления избранными новостями
- * Синхронизируется с AsyncStorage
- */
+// Favorites slice
+// Syncs with AsyncStorage
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,

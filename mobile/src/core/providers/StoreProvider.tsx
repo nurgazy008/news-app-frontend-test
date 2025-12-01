@@ -6,9 +6,7 @@ interface StoreProviderProps {
   children: React.ReactNode;
 }
 
-/**
- * Провайдер Redux store для всего приложения
- */
+// Redux store provider for app
 export const StoreProvider: React.FC<StoreProviderProps> = ({ children }) => {
   return <Provider store={store}>{children}</Provider>;
 };

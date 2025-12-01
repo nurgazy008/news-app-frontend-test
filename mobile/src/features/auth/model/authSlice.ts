@@ -12,10 +12,8 @@ const initialState: AuthState = {
   isLoading: false,
 };
 
-/**
- * Слайс для управления состоянием аутентификации
- * Включает биометрическую аутентификацию
- */
+// Auth state slice
+// Includes biometric authentication
 const authSlice = createSlice({
   name: 'auth',
   initialState,

@@ -16,10 +16,8 @@ interface NewsCardProps {
   onToggleFavorite?: (article: NewsArticle) => void;
 }
 
-/**
- * Компонент карточки новости
- * Отображает заголовок, описание, дату и изображение
- */
+// News card component
+// Shows title, description, date and image
 export const NewsCard: React.FC<NewsCardProps> = ({
   article,
   onPress,

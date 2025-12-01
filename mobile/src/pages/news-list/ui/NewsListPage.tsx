@@ -24,10 +24,8 @@ interface NewsListPageProps {
   navigation: any;
 }
 
-/**
- * Главный экран со списком новостей
- * Включает поиск, фильтрацию, пагинацию и добавление в избранное
- */
+// Main screen with news list
+// Has search, filters, pagination and favorites
 export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state: RootState) => state.favorites.favorites);
@@ -49,7 +47,7 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
     to: filters.to,
   });
 
-  // Обновляем список статей при получении новых данных
+  // Update articles when we get new data
   useEffect(() => {
     if (data?.articles) {
       if (page === 1) {
@@ -60,7 +58,7 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
     }
   }, [data, page]);
 
-  // Загрузка избранного при монтировании
+  // Load favorites when component mount
   useEffect(() => {
     const loadSavedFavorites = async () => {
       const savedFavorites = await loadFavorites();
@@ -71,36 +69,28 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
     loadSavedFavorites();
   }, [dispatch]);
 
-  /**
-   * Обработка поиска
-   */
+  // Handle search input
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     setPage(1);
     setArticles([]);
   };
 
-  /**
-   * Обработка изменения фильтров
-   */
+  // When filters change, reset page
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
     setPage(1);
     setArticles([]);
   };
 
-  /**
-   * Загрузка следующей страницы (бесконечная прокрутка)
-   */
+  // Load more articles when scroll to bottom
   const loadMore = () => {
     if (!isLoading && data && articles.length < data.totalResults) {
       setPage((prev) => prev + 1);
     }
   };
 
-  /**
-   * Обновление списка (pull-to-refresh)
-   */
+  // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     setPage(1);
@@ -108,16 +98,12 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
     setRefreshing(false);
   }, [refetch]);
 
-  /**
-   * Переход на детальный экран
-   */
+  // Go to detail page when click on article
   const handleArticlePress = (article: NewsArticle) => {
     navigation.navigate('NewsDetail', { article });
   };
 
-  /**
-   * Добавление/удаление из избранного
-   */
+  // Add or remove from favorites
   const handleToggleFavorite = async (article: NewsArticle) => {
     const isFavorite = favorites.some((fav) => fav.url === article.url);
     
@@ -131,16 +117,14 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
       dispatch(addFavorite(favoriteNews));
     }
 
-    // Сохраняем в AsyncStorage
+    // Save to storage
     const updatedFavorites = isFavorite
       ? favorites.filter((fav) => fav.url !== article.url)
       : [...favorites, { ...article, savedAt: Date.now() }];
     await saveFavorites(updatedFavorites);
   };
 
-  /**
-   * Проверка, находится ли статья в избранном
-   */
+  // Check if article is in favorites
   const isArticleFavorite = (url: string) => {
     return favorites.some((fav) => fav.url === url);
   };

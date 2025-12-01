@@ -18,15 +18,13 @@ interface FavoritesPageProps {
   navigation: any;
 }
 
-/**
- * Экран избранных новостей
- * Показывает сохраненные статьи с возможностью удаления
- */
+// Favorites screen
+// Shows saved articles, can delete them
 export const FavoritesPage: React.FC<FavoritesPageProps> = ({ navigation }) => {
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state: RootState) => state.favorites.favorites);
 
-  // Загрузка избранного при монтировании
+  // Load favorites when component mount
   useEffect(() => {
     const loadSavedFavorites = async () => {
       const savedFavorites = await loadFavorites();
@@ -37,16 +35,12 @@ export const FavoritesPage: React.FC<FavoritesPageProps> = ({ navigation }) => {
     loadSavedFavorites();
   }, [dispatch]);
 
-  /**
-   * Переход на детальный экран
-   */
+  // Go to detail page
   const handleArticlePress = (article: NewsArticle) => {
     navigation.navigate('NewsDetail', { article });
   };
 
-  /**
-   * Удаление из избранного
-   */
+  // Remove from favorites
   const handleRemoveFavorite = async (url: string) => {
     dispatch(removeFavorite(url));
     const updatedFavorites = favorites.filter((fav) => fav.url !== url);

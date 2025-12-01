@@ -16,9 +16,7 @@ import { FileUploadScreen } from '@/features/file-upload/ui/FileUploadScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-/**
- * Главный навигатор с табами
- */
+// Main navigator with tabs
 const MainTabs = () => {
   return (
     <Tab.Navigator
@@ -56,17 +54,13 @@ const MainTabs = () => {
   );
 };
 
-/**
- * Простой компонент иконки для табов
- */
+// Simple tab icon component
 const TabIcon: React.FC<{ emoji: string; color: string }> = ({ emoji }) => (
   <Text style={{ fontSize: 20 }}>{emoji}</Text>
 );
 
-/**
- * Главный навигатор приложения
- * Показывает AuthScreen если не авторизован, иначе MainTabs
- */
+// Main app navigator
+// Shows AuthScreen if not logged in, else shows MainTabs
 export const AppNavigator: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 

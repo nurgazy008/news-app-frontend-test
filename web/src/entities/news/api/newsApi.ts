@@ -1,20 +1,16 @@
 import { baseApi, NEWS_API_KEY } from '@/shared/api/baseApi';
 import { NewsResponse, NewsParams } from '../model/types';
 
-/**
- * API для работы с новостями (веб-версия)
- * Использует NewsAPI для получения списка новостей
- */
+// API for news (web version)
+// Uses NewsAPI to get news list
 export const newsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    /**
-     * Получение списка новостей с поддержкой фильтрации и пагинации
-     */
+    // Get news list with filters and pagination
     getNews: builder.query<NewsResponse, NewsParams>({
       query: (params) => {
         const searchParams = new URLSearchParams();
         
-        // Добавляем API ключ
+        // Add API key
         searchParams.append('apiKey', NEWS_API_KEY);
         
         if (params.country) searchParams.append('country', params.country);
@@ -26,14 +22,14 @@ export const newsApi = baseApi.injectEndpoints({
         if (params.to) searchParams.append('to', params.to);
         if (params.sortBy) searchParams.append('sortBy', params.sortBy);
 
-        // Если нет параметров, используем топ-новости
+        // If no params, use top headlines
         const endpoint = params.q || params.category || params.country 
           ? '/everything' 
           : '/top-headlines';
         
-        // Для top-headlines нужен country или category
+        // Top headlines needs country or category
         if (endpoint === '/top-headlines' && !params.country && !params.category) {
-          searchParams.append('country', 'us'); // по умолчанию
+          searchParams.append('country', 'us'); // default
         }
 
         return {

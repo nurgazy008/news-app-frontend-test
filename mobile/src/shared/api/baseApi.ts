@@ -3,11 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const NEWS_API_KEY = process.env.EXPO_PUBLIC_NEWS_API_KEY || 'your_api_key_here';
 const NEWS_API_BASE_URL = 'https://newsapi.org/v2';
 
-/**
- * Базовый API клиент с использованием RTK Query
- * Настроен для работы с NewsAPI
- * Примечание: NewsAPI требует ключ через query параметр apiKey
- */
+// Base API client using RTK Query
+// Configured for NewsAPI
+// Note: NewsAPI needs apiKey in query params
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -20,6 +18,6 @@ export const baseApi = createApi({
   endpoints: () => ({}),
 });
 
-// Экспортируем ключ для использования в endpoints
+// Export API key for use in endpoints
 export { NEWS_API_KEY };
 

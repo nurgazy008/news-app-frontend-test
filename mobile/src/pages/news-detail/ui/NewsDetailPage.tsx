@@ -27,10 +27,8 @@ interface NewsDetailPageProps {
   navigation: any;
 }
 
-/**
- * Детальный экран статьи
- * Показывает полную информацию и WebView для просмотра оригинальной статьи
- */
+// News detail screen
+// Shows full article info and WebView to read original article
 export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigation }) => {
   const { article } = route.params;
   const dispatch = useDispatch<AppDispatch>();
@@ -39,9 +37,7 @@ export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigatio
   const [showWebView, setShowWebView] = React.useState(false);
   const isFavorite = favorites.some((fav) => fav.url === article.url);
 
-  /**
-   * Форматирование даты
-   */
+  // Format date to readable string
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('ru-RU', {
@@ -53,9 +49,7 @@ export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigatio
     });
   };
 
-  /**
-   * Добавление/удаление из избранного
-   */
+  // Add or remove from favorites
   const handleToggleFavorite = async () => {
     if (isFavorite) {
       dispatch(removeFavorite(article.url));
@@ -72,9 +66,7 @@ export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigatio
     }
   };
 
-  /**
-   * Открытие оригинальной статьи в WebView
-   */
+  // Open original article in WebView
   const handleOpenWebView = () => {
     if (!article.url) {
       Alert.alert('Ошибка', 'URL статьи недоступен');
@@ -83,9 +75,7 @@ export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigatio
     setShowWebView(true);
   };
 
-  /**
-   * Открытие статьи во внешнем браузере
-   */
+  // Open article in external browser
   const handleOpenInBrowser = async () => {
     if (!article.url) {
       Alert.alert('Ошибка', 'URL статьи недоступен');

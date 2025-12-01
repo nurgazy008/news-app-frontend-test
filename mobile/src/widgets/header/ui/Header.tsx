@@ -12,16 +12,12 @@ interface HeaderProps {
   showLogout?: boolean;
 }
 
-/**
- * Компонент заголовка с кнопкой logout
- */
+// Header component with logout button
 export const Header: React.FC<HeaderProps> = ({ title, showLogout = true }) => {
   const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
-  /**
-   * Обработка выхода из аккаунта
-   */
+  // Handle logout
   const handleLogout = () => {
     Alert.alert(
       'Выход',
@@ -35,11 +31,11 @@ export const Header: React.FC<HeaderProps> = ({ title, showLogout = true }) => {
           text: 'Выйти',
           style: 'destructive',
           onPress: async () => {
-            // Очищаем биометрические ключи
+            // Delete biometric keys
             await deleteBiometricKeys();
-            // Очищаем хранилище
+            // Clear storage
             await clearStorage();
-            // Обновляем состояние
+            // Update state
             dispatch(logout());
           },
         },

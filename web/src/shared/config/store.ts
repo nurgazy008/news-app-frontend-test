@@ -3,10 +3,8 @@ import { baseApi } from '../api/baseApi';
 import authReducer from '@/features/auth/model/authSlice';
 import favoritesReducer from '@/features/favorites/model/favoritesSlice';
 
-/**
- * Redux store конфигурация для веб-версии
- * Включает RTK Query API и слайсы для auth и favorites
- */
+// Redux store config for web version
+// Includes RTK Query API and slices for auth and favorites
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,

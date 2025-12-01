@@ -7,10 +7,8 @@ interface NotificationProviderProps {
   children: React.ReactNode;
 }
 
-/**
- * Провайдер для настройки push-уведомлений
- * Инициализирует разрешения и обработчики
- */
+// Provider for push notifications setup
+// Initializes permissions and handlers
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -19,12 +17,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
     let interval: NodeJS.Timeout | undefined;
 
     try {
-      // Запрашиваем разрешения при запуске
+      // Request permissions on startup
       requestPermissions().catch((error) => {
         console.warn('Failed to request notification permissions:', error);
       });
 
-      // Настраиваем обработчики уведомлений
+      // Setup notification handlers
       cleanup = setupNotificationHandlers(
         (notification) => {
           console.log('Notification received:', notification);
@@ -40,8 +38,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
         }
       );
 
-      // Пример: отправка тестового уведомления каждые 30 секунд (для демонстрации)
-      // В реальном приложении это должно быть настроено через сервер
+      // Example: send test notification every 30 seconds (for demo)
+      // In real app this should be setup through server
+      // TODO: remove this in production, use real push notifications
       interval = setInterval(() => {
         sendNewsNotification(
           'Проверьте последние новости!',

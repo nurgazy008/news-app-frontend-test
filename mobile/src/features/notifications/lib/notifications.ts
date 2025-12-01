@@ -1,14 +1,10 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-/**
- * Сервис для работы с push-уведомлениями
- * Использует Expo Notifications
- */
+// Service for push notifications
+// Uses Expo Notifications
 
-/**
- * Настройка обработчика уведомлений
- */
+// Setup notification handler
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -17,9 +13,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-/**
- * Запрос разрешения на отправку уведомлений
- */
+// Request permission for notifications
 export const requestPermissions = async (): Promise<boolean> => {
   try {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -35,7 +29,7 @@ export const requestPermissions = async (): Promise<boolean> => {
       return false;
     }
 
-    // Для Android нужно настроить канал
+    // For Android need to setup channel
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -52,9 +46,7 @@ export const requestPermissions = async (): Promise<boolean> => {
   }
 };
 
-/**
- * Получение push token для отправки уведомлений
- */
+// Get push token for sending notifications
 export const getPushToken = async (): Promise<string | null> => {
   try {
     const hasPermission = await requestPermissions();
@@ -63,7 +55,8 @@ export const getPushToken = async (): Promise<string | null> => {
     }
 
     const tokenData = await Notifications.getExpoPushTokenAsync({
-      projectId: 'your-project-id', // Замените на ваш Expo project ID
+      projectId: 'your-project-id', // Replace with your Expo project ID
+      // TODO: get project ID from app.json or env
     });
 
     return tokenData.data;
@@ -73,9 +66,7 @@ export const getPushToken = async (): Promise<string | null> => {
   }
 };
 
-/**
- * Отправка локального уведомления
- */
+// Send local notification
 export const sendLocalNotification = async (
   title: string,
   body: string,
@@ -96,9 +87,7 @@ export const sendLocalNotification = async (
   }
 };
 
-/**
- * Отправка уведомления о новой новости
- */
+// Send notification about new news
 export const sendNewsNotification = async (
   articleTitle: string,
   articleUrl?: string
@@ -110,9 +99,7 @@ export const sendNewsNotification = async (
   );
 };
 
-/**
- * Настройка обработчиков уведомлений
- */
+// Setup notification handlers
 export const setupNotificationHandlers = (
   onNotificationReceived?: (notification: Notifications.Notification) => void,
   onNotificationTapped?: (response: Notifications.NotificationResponse) => void

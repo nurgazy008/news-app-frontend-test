@@ -5,10 +5,8 @@ import { StoreProvider } from './src/core/providers/StoreProvider';
 import { NotificationProvider } from './src/core/providers/NotificationProvider';
 import { AppNavigator } from './src/core/navigation/AppNavigator';
 
-/**
- * Главный компонент приложения
- * Инициализирует провайдеры и навигацию
- */
+// Main app component
+// Initializes providers and navigation
 export default function App() {
   return (
     <SafeAreaProvider>

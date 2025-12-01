@@ -10,25 +10,21 @@ import {
 import { Header } from '@/widgets/header/ui/Header';
 import { pickFile, uploadFile, downloadFile } from '../lib/fileService';
 
-/**
- * Экран для работы с файлами
- * Позволяет отправлять и скачивать файлы
- */
+// File upload/download screen
+// Can send and download files
 export const FileUploadScreen: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
 
-  /**
-   * Выбор и отправка файла
-   */
+  // Pick file and upload it
   const handlePickAndUpload = async () => {
     setUploading(true);
     setUploadProgress(0);
 
     try {
-      // Выбираем файл
+      // Pick file from device
       const pickResult = await pickFile();
       if (!pickResult.success || !pickResult.uri) {
         Alert.alert('Ошибка', pickResult.error || 'Не удалось выбрать файл');
@@ -36,7 +32,7 @@ export const FileUploadScreen: React.FC = () => {
         return;
       }
 
-      // Загружаем файл
+      // Upload file to server
       const uploadResult = await uploadFile(pickResult.uri, (progress) => {
         setUploadProgress(progress);
       });
@@ -54,15 +50,13 @@ export const FileUploadScreen: React.FC = () => {
     }
   };
 
-  /**
-   * Скачивание файла
-   */
+  // Download file from server
   const handleDownload = async () => {
     setDownloading(true);
     setDownloadProgress(0);
 
     try {
-      // Пример URL для скачивания (в реальном приложении это будет URL вашего API)
+      // Example download URL (in real app this should be your API URL)
       const downloadUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
       const fileName = 'downloaded-file.pdf';
 

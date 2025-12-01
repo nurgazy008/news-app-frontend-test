@@ -1,6 +1,6 @@
 import ReactNativeBiometrics from 'react-native-biometrics';
 
-// Инициализация с обработкой ошибок для Expo Go
+// Init with error handling for Expo Go
 let rnBiometrics: ReactNativeBiometrics | null = null;
 try {
   rnBiometrics = new ReactNativeBiometrics();
@@ -8,19 +8,15 @@ try {
   console.warn('Biometrics not available:', error);
 }
 
-/**
- * Утилиты для работы с биометрической аутентификацией
- * Поддерживает Touch ID (iOS/Android) и Face ID (iOS)
- */
+// Helper functions for biometric auth
+// Supports Touch ID (iOS/Android) and Face ID (iOS)
 
 export interface BiometricResult {
   success: boolean;
   error?: string;
 }
 
-/**
- * Проверка доступности биометрии на устройстве
- */
+// Check if device has biometric
 export const checkBiometrics = async (): Promise<{
   available: boolean;
   biometryType?: string;
@@ -37,9 +33,7 @@ export const checkBiometrics = async (): Promise<{
   }
 };
 
-/**
- * Создание биометрического ключа (при первом использовании)
- */
+// Create biometric key (first time use)
 export const createBiometricKey = async (): Promise<boolean> => {
   try {
     if (!rnBiometrics) {
@@ -62,9 +56,7 @@ export const createBiometricKey = async (): Promise<boolean> => {
   }
 };
 
-/**
- * Аутентификация с помощью биометрии
- */
+// Authenticate with biometric
 export const authenticateWithBiometrics = async (): Promise<BiometricResult> => {
   try {
     if (!rnBiometrics) {
@@ -109,9 +101,7 @@ export const authenticateWithBiometrics = async (): Promise<BiometricResult> => 
   }
 };
 
-/**
- * Удаление биометрических ключей (при logout)
- */
+// Delete biometric keys (on logout)
 export const deleteBiometricKeys = async (): Promise<void> => {
   try {
     if (!rnBiometrics) {

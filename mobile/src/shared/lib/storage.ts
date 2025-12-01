@@ -4,13 +4,9 @@ import { FavoriteNews } from '@/entities/news/model/types';
 const FAVORITES_KEY = '@favorites';
 const AUTH_KEY = '@auth';
 
-/**
- * Утилиты для работы с локальным хранилищем (AsyncStorage)
- */
+// Helper functions for local storage (AsyncStorage)
 
-/**
- * Сохранение избранных новостей
- */
+// Save favorites to storage
 export const saveFavorites = async (favorites: FavoriteNews[]): Promise<void> => {
   try {
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
@@ -20,9 +16,7 @@ export const saveFavorites = async (favorites: FavoriteNews[]): Promise<void> =>
   }
 };
 
-/**
- * Загрузка избранных новостей
- */
+// Load favorites from storage
 export const loadFavorites = async (): Promise<FavoriteNews[]> => {
   try {
     const data = await AsyncStorage.getItem(FAVORITES_KEY);
@@ -33,9 +27,7 @@ export const loadFavorites = async (): Promise<FavoriteNews[]> => {
   }
 };
 
-/**
- * Сохранение состояния аутентификации
- */
+// Save auth state
 export const saveAuthState = async (isAuthenticated: boolean): Promise<void> => {
   try {
     await AsyncStorage.setItem(AUTH_KEY, JSON.stringify({ isAuthenticated }));
@@ -45,9 +37,7 @@ export const saveAuthState = async (isAuthenticated: boolean): Promise<void> => 
   }
 };
 
-/**
- * Загрузка состояния аутентификации
- */
+// Load auth state
 export const loadAuthState = async (): Promise<boolean> => {
   try {
     const data = await AsyncStorage.getItem(AUTH_KEY);
@@ -62,9 +52,7 @@ export const loadAuthState = async (): Promise<boolean> => {
   }
 };
 
-/**
- * Очистка всех данных
- */
+// Clear all data from storage
 export const clearStorage = async (): Promise<void> => {
   try {
     await AsyncStorage.multiRemove([FAVORITES_KEY, AUTH_KEY]);
