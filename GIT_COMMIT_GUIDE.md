@@ -74,3 +74,4 @@ git push origin master
 - Не коммитьте `.env` файлы
 - В README указано, как получить API ключ
 
+

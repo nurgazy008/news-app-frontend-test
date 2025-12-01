@@ -37,3 +37,4 @@ export interface FavoriteNews extends NewsArticle {
   savedAt: number; // timestamp сохранения
 }
 
+

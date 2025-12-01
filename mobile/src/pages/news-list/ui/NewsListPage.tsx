@@ -67,6 +67,7 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ navigation }) => {
       }
     };
     loadSavedFavorites();
+    // TODO: maybe add error handling here
   }, [dispatch]);
 
   // Handle search input

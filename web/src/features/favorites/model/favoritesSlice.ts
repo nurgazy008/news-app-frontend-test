@@ -38,3 +38,4 @@ const favoritesSlice = createSlice({
 export const { addFavorite, removeFavorite, setFavorites, clearFavorites } = favoritesSlice.actions;
 export default favoritesSlice.reducer;
 
+

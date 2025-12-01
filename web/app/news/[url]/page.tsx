@@ -7,6 +7,7 @@ import { RootState, AppDispatch } from '@/shared/config/store';
 import { addFavorite, removeFavorite } from '@/features/favorites/model/favoritesSlice';
 import { saveFavorites } from '@/shared/lib/storage';
 import { FavoriteNews, NewsArticle } from '@/entities/news/model/types';
+import { Button } from '@/shared/ui/button';
 
 export default function NewsDetailPage() {
   const params = useParams();
@@ -76,12 +77,12 @@ export default function NewsDetailPage() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => router.back()}
-            className="text-blue-600 hover:text-blue-700 font-medium"
           >
             ← Назад
-          </button>
+          </Button>
           <h1 className="text-xl font-bold">Статья</h1>
           <div></div>
         </div>
@@ -119,28 +120,26 @@ export default function NewsDetailPage() {
         )}
 
         <div className="flex gap-4">
-          <button
+          <Button
+            variant={isFavorite ? "destructive" : "secondary"}
             onClick={handleToggleFavorite}
-            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
-              isFavorite
-                ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-            }`}
           >
             {isFavorite ? '❤️ Удалить из избранного' : '🤍 Добавить в избранное'}
-          </button>
+          </Button>
 
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-          >
-            🌐 Открыть оригинал
-          </a>
+          <Button asChild>
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🌐 Открыть оригинал
+            </a>
+          </Button>
         </div>
       </article>
     </div>
   );
 }
+
 

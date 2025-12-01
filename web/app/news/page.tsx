@@ -11,6 +11,9 @@ import { saveFavorites, loadFavorites, saveAuthState } from '@/shared/lib/storag
 import { FavoriteNews } from '@/entities/news/model/types';
 import { logout } from '@/features/auth/model/authSlice';
 import { FiltersPanel, FilterOptions } from '@/widgets/filters/ui/FiltersPanel';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card';
 
 export default function NewsPage() {
   const router = useRouter();
@@ -101,35 +104,33 @@ export default function NewsPage() {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Новости</h1>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => {
               dispatch(logout());
               saveAuthState(false);
               router.push('/auth');
             }}
-            className="text-red-600 hover:text-red-700 font-medium"
+            className="text-red-600 hover:text-red-700"
           >
             Выйти
-          </button>
+          </Button>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         <form onSubmit={handleSearch} className="mb-6">
           <div className="flex gap-2">
-            <input
+            <Input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Поиск новостей..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1"
             />
-            <button
-              type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
+            <Button type="submit">
               Поиск
-            </button>
+            </Button>
           </div>
         </form>
 
@@ -143,19 +144,16 @@ export default function NewsPage() {
         ) : error ? (
           <div className="text-center py-12">
             <p className="text-red-600 mb-4">Ошибка загрузки новостей</p>
-            <button
-              onClick={() => refetch()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
+            <Button onClick={() => refetch()}>
               Повторить
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article, index) => (
-              <div
+              <Card
                 key={article.url || index}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => router.push(`/news/${encodeURIComponent(article.url)}`)}
               >
                 {article.urlToImage && (
@@ -165,39 +163,44 @@ export default function NewsPage() {
                     className="w-full h-48 object-cover"
                   />
                 )}
-                <div className="p-4">
-                  <h2 className="text-lg font-bold mb-2 line-clamp-2">{article.title}</h2>
+                <CardHeader>
+                  <CardTitle className="line-clamp-2">{article.title}</CardTitle>
                   {article.description && (
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-3">{article.description}</p>
+                    <CardDescription className="line-clamp-3">
+                      {article.description}
+                    </CardDescription>
                   )}
-                  <div className="flex justify-between items-center text-xs text-gray-500">
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between items-center text-xs text-gray-500 mb-3">
                     <span>{new Date(article.publishedAt).toLocaleDateString('ru-RU')}</span>
                     {article.source.name && <span>{article.source.name}</span>}
                   </div>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleToggleFavorite(article);
                     }}
-                    className="mt-3 text-2xl"
+                    className="text-2xl"
                   >
                     {isArticleFavorite(article.url) ? '❤️' : '🤍'}
-                  </button>
-                </div>
-              </div>
+                  </Button>
+                </CardContent>
+              </Card>
             ))}
           </div>
         )}
 
         {articles.length > 0 && (
           <div className="text-center mt-8">
-            <button
+            <Button
               onClick={() => setPage((prev) => prev + 1)}
               disabled={isLoading}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
             >
               {isLoading ? 'Загрузка...' : 'Загрузить еще'}
-            </button>
+            </Button>
           </div>
         )}
       </div>

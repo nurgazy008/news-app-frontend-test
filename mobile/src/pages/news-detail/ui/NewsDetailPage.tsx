@@ -36,6 +36,8 @@ export const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ route, navigatio
   
   const [showWebView, setShowWebView] = React.useState(false);
   const isFavorite = favorites.some((fav) => fav.url === article.url);
+  
+  // TODO: maybe add loading state for WebView
 
   // Format date to readable string
   const formatDate = (dateString: string) => {
